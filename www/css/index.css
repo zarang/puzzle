@@ -194,3 +194,21 @@ h1 {
     text-shadow: none;
     font-size: 18px;
 }
+.signup-page
+{
+    width: 100vw;
+    height: 100vh;
+    background-color: #e49c4c;
+}
+.signup_page
+{
+    box-shadow: none;
+    margin-top: 100px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.first_name
+{
+    width: 40%;
+    
+}

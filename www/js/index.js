@@ -17,7 +17,6 @@ $("#signup").on('click', function() {
         reverse: true
     }, true, true);
 
-
 });
 $("#go_login").on('click', function() {
 
@@ -29,34 +28,59 @@ $("#go_login").on('click', function() {
 
 });
 
-$("#page1").on('click', function() {
-	//alert("aa");
+$("#page1").on('swipeleft', function() {
+    //alert("aa");
 
     $.mobile.changePage("#page2", {
         transition: "slide",
-        reverse: true
+        reverse: false
     }, true, true);
+
 
 });
 
 $("#page2").on('swiperight', function() {
+    //alert("aa");
 
     $.mobile.changePage("#page1", {
         transition: "slide",
         reverse: true
     }, true, true);
 
+
 });
 
+$("#page2").on('swipeleft', function() {
+    //alert("aa");
 
+    $.mobile.changePage("#page3", {
+        transition: "slide",
+        reverse: false
+    }, true, true);
+
+
+});
+
+$("#page2").on('swiperight', function() {
+    //alert("aa");
+
+    $.mobile.changePage("#page1", {
+        transition: "slide",
+        reverse: true
+    }, true, true);
+
+
+});
 
 $("#page3").on('swiperight', function() {
+    //alert("aa");
 
     $.mobile.changePage("#page2", {
         transition: "slide",
         reverse: true
-    },
-        true, true);
+    }, true, true);
+
+
 });
 
 
