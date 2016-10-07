@@ -69,9 +69,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto glview = director->getOpenGLView();
     if(!glview) {
 #if(CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-        glview = cocos2d::GLViewImpl::create("MyGame");
+        glview = cocos2d::GLViewImpl::create("Simple");
 #else
-        glview = cocos2d::GLViewImpl::createWithRect("MyGame", Rect(0,0,960,640));
+        glview = cocos2d::GLViewImpl::createWithRect("Simple", Rect(0,0,960,640));
 #endif
         director->setOpenGLView(glview);
 }

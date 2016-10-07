@@ -22,11 +22,6 @@
     "frameRate"     : 60,
     // "frameRate" set the wanted frame rate for your game, but the real fps depends on your game implementation and the running environment.
 
-    "noCache"       : false,
-    // "noCache" set whether your resources will be loaded with a timestamp suffix in the url.
-    // In this way, your resources will be force updated even if the browser holds a cache of it.
-    // It's very useful for mobile browser debuging.
-
     "id"            : "gameCanvas",
     // "gameCanvas" sets the id of your canvas element on the web page, it's useful only on web.
 
@@ -53,24 +48,85 @@
  */
 
 cc.game.onStart = function(){
-    if(!cc.sys.isNative && document.getElementById("cocosLoading")) //If referenced loading.js, please remove it
-        document.body.removeChild(document.getElementById("cocosLoading"));
-
-    // Pass true to enable retina display, on Android disabled by default to improve performance
-    cc.view.enableRetina(cc.sys.os === cc.sys.OS_IOS ? true : false);
-
-    // Adjust viewport meta
     cc.view.adjustViewPort(true);
-
-    // Uncomment the following line to set a fixed orientation for your game
-    // cc.view.setOrientation(cc.ORIENTATION_PORTRAIT);
-
-    // Setup the resolution policy and design resolution size
-    cc.view.setDesignResolutionSize(960, 640, cc.ResolutionPolicy.SHOW_ALL);
-
-    // The game will be resized when browser size change
-    cc.view.resizeWithBrowserSize(true);
-
+    
+    var isLandscape = true;
+    
+    if (cc.sys.isNative)
+    {
+        var searchPaths = jsb.fileUtils.getSearchPaths();
+        
+        // ipad retina
+        if (cc.view.getFrameSize().width >= 1536 && cc.view.getFrameSize().height >= 1536)
+        {
+            if (true == isLandscape)
+            {
+                cc.view.setDesignResolutionSize(2048, 1536, cc.ResolutionPolicy.SHOW_ALL);
+            }
+            else
+            {
+                cc.view.setDesignResolutionSize(1536, 1048, cc.ResolutionPolicy.SHOW_ALL);
+            }
+            
+            searchPaths.push("res/largeRes");
+            searchPaths.push("src");
+        }
+        else if (cc.view.getFrameSize().width >= 640 && cc.view.getFrameSize().height >= 640) //iphone hd or above and android high res screens
+        {
+            var size;
+            
+            if (cc.view.getFrameSize().width >= 1136 || cc.view.getFrameSize.height >= 1136)
+            {
+                size = 1136;
+            }
+            else
+            {
+                size = 960;
+            }
+            
+            if (true == isLandscape)
+            {
+                cc.view.setDesignResolutionSize(size, 640, cc.ResolutionPolicy.SHOW_ALL);
+            }
+            else
+            {
+                cc.view.setDesignResolutionSize(640, size, cc.ResolutionPolicy.SHOW_ALL);
+            }
+            
+            searchPaths.push("res/mediumRes");
+            searchPaths.push("src");
+        }
+        else
+        {
+            if (true == isLandscape)
+            {
+                cc.view.setDesignResolutionSize(480, 320, cc.ResolutionPolicy.SHOW_ALL);
+            }
+            else
+            {
+                cc.view.setDesignResolutionSize(320, 480, cc.ResolutionPolicy.SHOW_ALL);
+            }
+            
+            searchPaths.push("res/smallRes");
+            searchPaths.push("src");
+        }
+        
+        jsb.fileUtils.setSearchPaths(searchPaths);
+    }
+    else
+    {
+        if (true == isLandscape)
+        {
+            cc.view.setDesignResolutionSize(1280, 720, cc.ResolutionPolicy.SHOW_ALL);
+        }
+        else
+        {
+            cc.view.setDesignResolutionSize(720, 1280, cc.ResolutionPolicy.SHOW_ALL);
+        }
+        
+        cc.view.resizeWithBrowserSize(true);
+    }
+    
     //load resources
     cc.LoaderScene.preload(g_resources, function () {
         cc.director.runScene(new HelloWorldScene());
